@@ -122,7 +122,7 @@
 
 #include <iostream>
 
-int PlayerManagerImplementation::MAX_CHAR_ONLINE_COUNT = 2;
+int PlayerManagerImplementation::MAX_CHAR_ONLINE_COUNT = 4; // changed to 4 from default of 2
 
 PlayerManagerImplementation::PlayerManagerImplementation(ZoneServer* zoneServer, ZoneProcessServer* impl) :
 										Logger("PlayerManager") {

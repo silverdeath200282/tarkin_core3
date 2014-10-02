@@ -71,17 +71,19 @@ public:
 		if (zone == NULL || obj->getObjectTemplate() == NULL)
 			return;
 
-		Reference<SceneObject*> objTooClose = zone->getPlanetManager()->findObjectTooCloseToDecoration(mayor->getPositionX(), mayor->getPositionY(), obj->getObjectTemplate()->getNoBuildRadius());
-
-		if (objTooClose != NULL && !obj->isCityStreetLamp()) {
-			StringIdChatParameter msg;
-			msg.setStringId("@city/city:deco_too_close"); //"You can't place a decoration here, it would be too close to structure %TO.");
-
-			msg.setTO(objTooClose);
-			//msg.setTO(objTooClose->getObjectNameStringIdFile(), obj->getObjectNameStringIdName());
-			mayor->sendSystemMessage(msg);
-			return;
-		}
+//		Disable closeness check for decoration placement
+		
+//		Reference<SceneObject*> objTooClose = zone->getPlanetManager()->findObjectTooCloseToDecoration(mayor->getPositionX(), mayor->getPositionY(), obj->getObjectTemplate()->getNoBuildRadius());
+//
+//		if(objTooClose != NULL){
+//			StringIdChatParameter msg;
+//			msg.setStringId("@city/city:deco_too_close"); //"You can't place a decoration here, it would be too close to structure %TO.");
+//
+//			msg.setTO(objTooClose);
+//			//msg.setTO(objTooClose->getObjectNameStringIdFile(), obj->getObjectNameStringIdName());
+//			mayor->sendSystemMessage(msg);
+//			return;
+//		}
 
 		if(city->getCityTreasury() < 1000){
 			StringIdChatParameter msg;

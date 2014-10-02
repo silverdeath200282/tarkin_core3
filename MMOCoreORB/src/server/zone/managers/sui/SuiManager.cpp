@@ -440,9 +440,9 @@ void SuiManager::handleCharacterBuilderSelectItem(CreatureObject* player, SuiBox
 				if (!player->isInCombat()) {
 					player->sendSystemMessage("You have been cleansed from the signs of previous battles.");
 
-					for (int i = 0; i < 9; ++i) {
-						player->setWounds(i, 0);
-					}
+					//for (int i = 0; i < 9; ++i) {  //disable blue frog wound healing but leave BF healing
+					//	player->setWounds(i, 0);
+					//}
 
 					player->setShockWounds(0);
 				} else {

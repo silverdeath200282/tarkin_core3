@@ -212,7 +212,8 @@ float VendorDataComponent::getMaintenanceRate() {
 		return 15.f;
 
 	// 15 credits base maintenance
-	float maintRate = 15.f;
+	// reduced by half to 7 credits
+	float maintRate = 7.f;
 
 	// Apply reduction for merchant skills
 	ManagedReference<CreatureObject*> owner = strongParent->getZoneServer()->getObject(getOwnerId()).castTo<CreatureObject*>();
@@ -224,8 +225,9 @@ float VendorDataComponent::getMaintenanceRate() {
 	}
 
 	// Additional 6 credits per hour to be registered on the map
+	//cut map reg fee in half to 3cr
 	if(registered)
-		maintRate += 6.f;
+		maintRate += 3.f;
 
 	return maintRate;
 }
