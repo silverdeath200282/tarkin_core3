@@ -173,6 +173,21 @@ void CampSiteActiveAreaImplementation::abandonCamp() {
 	if(campOwner != NULL) {
 		campOwner->dropObserver(ObserverEventType::STARTCOMBAT, campObserver);
 		campOwner->sendSystemMessage("@camp:sys_abandoned_camp"); // Your camp has been abandoned.
+		
+		// Gather and use data for XP
+		float durationUsed = ((float)(System::getTime() - timeCreated)) / (campStructureData->getDuration() / 4);
+		if (durationUsed > 1)
+			durationUsed = 1;
+		int amount = 0;
+		int campXp = campStructureData->getExperience();
+		amount = (int)(campXp * durationUsed);
+		amount += (int)((visitors.size() -1) * (campXp / 30) * durationUsed);
+		amount += (int)(currentXp * durationUsed);
+		
+		// Grant XP after abandoning. 
+		PlayerManager* playerManager = campOwner->getZoneServer()->getPlayerManager();
+		playerManager->awardExperience(campOwner, "camp", amount, true); 
+		campXp = 0; // Reset XP to avoid exploitation.
 	}
 }
 

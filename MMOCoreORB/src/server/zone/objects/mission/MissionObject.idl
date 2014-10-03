@@ -187,7 +187,9 @@ class MissionObject extends IntangibleObject {
 	public native void sendBaselinesTo(SceneObject player);
 	
 	public native void setMissionDescription(final string file, final string id, boolean notifyClient = true);
+	public native void updateHuntingMissionDescription(final string message, boolean notifyClient = true);
 	public native void setMissionTitle(final string file, final string id, boolean notifyClient = true);
+	public native void setMissionTitleAsCreatureName(final string heading, final string message, boolean notifyClient = true);
 	public native void setMissionTargetName(final string target, boolean notifyClient = true);
 	public native void setMissionDifficulty(int diffLevel, boolean notifyClient = true);
 	public native void setMissionDifficulty(int diffLevel, int display, int diff, boolean notifyClient = true);

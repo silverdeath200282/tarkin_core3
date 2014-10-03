@@ -739,6 +739,10 @@ void CreatureManagerImplementation::harvest(Creature* creature, CreatureObject* 
 		quantityExtracted = int(quantityExtracted * 0.50f);
 		creatureHealth = "creature_quality_skinny";
 	}
+	
+	// Legend of Hondo customization
+	if (quantityExtracted <  30)
+		quantityExtracted  = 30; 
 
 	float modifier = 1;
 	int baseAmount = quantityExtracted;
