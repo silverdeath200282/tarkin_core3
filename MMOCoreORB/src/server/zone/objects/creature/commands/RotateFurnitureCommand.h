@@ -47,6 +47,7 @@ which carries forward this exception.
 
 #include "server/zone/objects/scene/SceneObject.h"
 #include "server/zone/objects/tangible/components/vendor/VendorDataComponent.h"
+#include "server/zone/objects/tangible/components/EventPerkDataComponent.h"
 #include "server/zone/managers/player/PlayerManager.h"
 
 class RotateFurnitureCommand : public QueueCommand {
@@ -69,14 +70,6 @@ public:
 
 		if (ghost == NULL)
 			return GENERALERROR;
-
-		ManagedReference<SceneObject*> rootParent = creature->getRootParent();
-
-		BuildingObject* buildingObject = rootParent != NULL ? (rootParent->isBuildingObject() ? cast<BuildingObject*>( rootParent.get()) : NULL) : NULL;
-		if (buildingObject == NULL) {
-			creature->sendSystemMessage("@player_structure:must_be_in_building"); //You must be in a building to do that.
-			return GENERALERROR;
-		}
 
 		String dir;
 		int degrees = 0;
@@ -120,18 +113,47 @@ public:
 			return GENERALERROR;
 		}
 
-		if (obj->isVendor() && !obj->checkContainerPermission(creature, ContainerPermissions::MOVEVENDOR)) {
-			return GENERALERROR;
-		}
+		ManagedReference<SceneObject*> rootParent = creature->getRootParent();
 
-		if (!obj->isVendor() && !buildingObject->isOnAdminList(creature)) {
-			creature->sendSystemMessage("@player_structure:must_be_admin"); //You must be a building admin to do that.
-			return GENERALERROR;
-		}
+		BuildingObject* buildingObject = rootParent != NULL ? (rootParent->isBuildingObject() ? cast<BuildingObject*>( rootParent.get()) : NULL) : NULL;
+		EventPerkDataComponent* data = cast<EventPerkDataComponent*>(obj->getDataObjectComponent()->get());
 
-		if (obj->getRootParent() != buildingObject || buildingObject->containsChildObject(obj)) {
-			creature->sendSystemMessage("@player_structure:rotate_what"); //What do you want to rotate?
+		if (data != NULL) {
+			EventPerkDeed* deed = data->getDeed();
+
+			if (deed == NULL) {
+				return GENERALERROR;
+			}
+
+			ManagedReference<CreatureObject*> owner = deed->getOwner().get();
+
+			if (owner != creature) {
+				return GENERALERROR;
+			}
+
+		} else if (buildingObject == NULL) {
+			creature->sendSystemMessage("@player_structure:must_be_in_building"); //You must be in a building to do that.
 			return GENERALERROR;
+
+		} else {
+			if (obj->isVendor() && !obj->checkContainerPermission(creature, ContainerPermissions::MOVEVENDOR)) {
+				return GENERALERROR;
+			}
+
+			if (!obj->isVendor() && !buildingObject->isOnAdminList(creature)) {
+				creature->sendSystemMessage("@player_structure:must_be_admin"); //You must be a building admin to do that.
+				return GENERALERROR;
+			}
+
+			if (obj->getRootParent() != buildingObject || buildingObject->containsChildObject(obj)) {
+				creature->sendSystemMessage("@player_structure:rotate_what"); //What do you want to rotate?
+				return GENERALERROR;
+			}
+
+			if (buildingObject->isGCWBase()) {
+				creature->sendSystemMessage("@player_structure:no_move_hq"); // You may not move or rotate objects inside a factional headquarters.
+				return GENERALERROR;
+			}
 		}
 
 		if (dir == "right"){
@@ -161,7 +183,6 @@ public:
 			obj->teleport(obj->getPositionX(), obj->getPositionZ(), obj->getPositionY());
 
 		return SUCCESS;
-
 	}
 
 };
