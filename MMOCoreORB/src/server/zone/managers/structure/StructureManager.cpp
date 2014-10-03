@@ -288,9 +288,9 @@ int StructureManager::placeStructureFromDeed(CreatureObject* creature,
 
 				//info("existing footprint contains placing point", true);
 
-				creature->sendSystemMessage("@player_structure:no_room"); //there is no room to place the structure here..
+				//creature->sendSystemMessage("@player_structure:no_room"); //there is no room to place the structure here..
 
-				return 1;
+				//return 1;
 			}
 
 			if (placingFootprint.containsPoint(xx0, yy0)
@@ -300,9 +300,9 @@ int StructureManager::placeStructureFromDeed(CreatureObject* creature,
 					|| (xx0 == x0 && yy0 == y0 && xx1 == x1 && yy1 == y1)) {
 				//info("placing footprint contains existing point", true);
 
-				creature->sendSystemMessage("@player_structure:no_room"); //there is no room to place the structure here.
+				//creature->sendSystemMessage("@player_structure:no_room"); //there is no room to place the structure here.
 
-				return 1;
+				//return 1;
 			}
 		}
 	}
