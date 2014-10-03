@@ -408,7 +408,7 @@ bool FactoryObjectImplementation::startFactory() {
 
 	ManagedReference<ManufactureSchematic* > schematic = getContainerObject(0).castTo<ManufactureSchematic*>();
 
-	timer = ((int)schematic->getComplexity()) * 2;
+	timer = 1; // Cap time per item at 1 second. Default was ((int)schematic->getComplexity()) * 2;
 
 	if(!populateSchematicBlueprint(schematic))
 		return false;
