@@ -644,7 +644,8 @@ Reference<FactoryCrate*> TangibleObjectImplementation::createFactoryCrate(bool i
 	if (tanoData == NULL)
 		return NULL;
 
-	crate->setMaxCapacity(tanoData->getFactoryCrateSize());
+	//crate->setMaxCapacity(tanoData->getFactoryCrateSize());
+	crate->setMaxCapacity(1000);
 
 	if (insertSelf) {
 		crate->transferObject(_this.get(), -1, false);
