@@ -86,7 +86,6 @@ class PlayerManager extends Observer implements Logger {
 	transient ZoneProcessServer processor;
 
 	// Used for frog/gm buffs
-
 	protected int performanceBuff;
 	protected int medicalBuff;
 	protected int performanceDuration;
