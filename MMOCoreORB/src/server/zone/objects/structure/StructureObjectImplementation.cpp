@@ -158,21 +158,23 @@ void StructureObjectImplementation::scheduleMaintenanceExpirationEvent() {
 		return;
 	}
 
-	ManagedReference<CreatureObject*> owner = getOwnerCreatureObject();
+// Disabling this NULL check due to edge cases where the NULL is false.
 
-	if (owner == NULL || !owner->isPlayerCreature()) {
-		info("Player structure has NULL owner, destroying.", true);
-		StructureManager::instance()->destroyStructure(_this.get());
-		return;
-	}
+//	ManagedReference<CreatureObject*> owner = getOwnerCreatureObject();
 
-	ManagedReference<PlayerObject*> ghost = owner->getPlayerObject();
+//	if (owner == NULL || !owner->isPlayerCreature()) {
+//		info("Player structure has NULL owner, destroying.", true);
+//		StructureManager::instance()->destroyStructure(_this.get());
+//		return;
+//	}
 
-	if (!ghost->isOwnedStructure(_this.get())) {
-		info("Removing orphaned structure.", true);
-		StructureManager::instance()->destroyStructure(_this.get());
-		return;
-	}
+//	ManagedReference<PlayerObject*> ghost = owner->getPlayerObject();
+
+//	if (!ghost->isOwnedStructure(_this.get())) {
+//		info("Removing orphaned structure.", true);
+//		StructureManager::instance()->destroyStructure(_this.get());
+//		return;
+//	}
 
 	int timeRemaining;
 
