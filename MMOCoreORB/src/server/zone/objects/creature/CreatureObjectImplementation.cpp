@@ -717,14 +717,6 @@ void CreatureObjectImplementation::setCombatState() {
 
 		addMountedCombatSlow();
 
-		// Clear Conceal
-		uint32 crc = String("skill_buff_mask_scent").hashCode();
-		removeBuff(crc);
-
-		// Clear Mask Scent
-		crc = String("skill_buff_mask_scent_self").hashCode();
-		removeBuff(crc);
-
 		notifyObservers(ObserverEventType::STARTCOMBAT);
 	}
 }
@@ -2391,7 +2383,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int healthRegen = getSkillMod("private_med_wound_health");
 
 	if(healthRegen > 0) {
-		healthWoundHeal += (int)(healthRegen * 0.6);
+		healthWoundHeal += (int)(healthRegen * 0.2);
 		if(healthWoundHeal >= 100) {
 			healWound(_this.get(), CreatureAttribute::HEALTH, 1, true, false);
 			healWound(_this.get(), CreatureAttribute::STRENGTH, 1, true, false);
@@ -2404,7 +2396,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int actionRegen = getSkillMod("private_med_wound_action");
 
 	if(actionRegen > 0) {
-		actionWoundHeal += (int)(actionRegen * 0.6);
+		actionWoundHeal += (int)(actionRegen * 0.2);
 		if(actionWoundHeal >= 100) {
 			healWound(_this.get(), CreatureAttribute::ACTION, 1, true, false);
 			healWound(_this.get(), CreatureAttribute::QUICKNESS, 1, true, false);
@@ -2417,7 +2409,7 @@ void CreatureObjectImplementation::activatePassiveWoundRegeneration() {
 	int mindRegen = getSkillMod("private_med_wound_mind");
 
 	if(mindRegen > 0) {
-		mindWoundHeal += (int)(mindRegen * 0.6);
+		mindWoundHeal += (int)(mindRegen * 0.2);
 		if(mindWoundHeal >= 100) {
 			healWound(_this.get(), CreatureAttribute::MIND, 1, true, false);
 			healWound(_this.get(), CreatureAttribute::FOCUS, 1, true, false);
